@@ -56,6 +56,8 @@ def process_func(example):
         add_special_tokens=False,
     )
     response = tokenizer(f"{example['output']}", add_special_tokens=False)
+    # tokenizer.eos_token：结束符。如果不加就要手动加： [tokenizer.pad_token_id]
+    # response = tokenizer(example["output"] + tokenizer.eos_token)
     input_ids = instruction["input_ids"] + response["input_ids"] + [tokenizer.pad_token_id]
     attention_mask = (
         instruction["attention_mask"] + response["attention_mask"] + [1]
